@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+print = e => {console.log(e)}
+
 function occurrences(string, subString, allowOverlapping) {
 
     string += "";
@@ -45,7 +47,36 @@ partOne = () =>{
     })
 }
 
+compareLineToLine = (line1,line2) => {
+    line1 = line1.split("")
+    line2 = line2.split("")
+    let count=0
+    let daChar=''
+
+    for(let i = 0; i<line1.length;i++){
+        if(line1[i] !== line2[i]){
+            count++
+        }
+        if (count>1){
+            return false
+        }       
+
+    }
+    return true
+}
+
 partTwo = () => {
+
+    fs.readFile("input2.txt",'utf-8',(err,data)=>{
+        data=data.split("\n")
+        for(let i=0;i<data.length;i++){
+            for(let j=i+1;j<data.length;j++){
+                if (compareLineToLine(data[i],data[j])){
+                    print(data[i] + ":" + data[j])
+                }
+            }
+        }
+    })
 
     //open file
     //for each line
@@ -58,3 +89,4 @@ partTwo = () => {
 
 
 
+partTwo()
