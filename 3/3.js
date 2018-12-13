@@ -2,28 +2,39 @@ const fs = require('fs');
 const lodash=require('lodash');
 
 print = o => console.log(o)
-guesses ={}
+//guesses = new Array(100).fill([])
+
+guesses = {}
 recordSuggestions = (start,size) =>{
     start=start.split(",")
     size=size.split("x")
+
     //make columns
     let colStart = Number(start[0])
-    let colEnd = Number(start[0]+size[1])
+    let colEnd = Number(start[0])+Number(size[1])
     let columns = lodash.range(colStart,colEnd)
-
+    //print(columns)
 
     //make rows
     let rowStart = Number(start[1])
-    let rowEnd = Number(start[1]+size[0])
+    let rowEnd = Number(start[1])+Number(size[0])
     let rows = lodash.range(rowStart,rowEnd)
+    //print(rows)
 
     columns.forEach(e=>{
         rows.forEach(f=>{
-            let key = String(e) + String(f)
-            if (guesses[key]) {
-                guesses[key]+=1
+           //print(guesses[e])
+            if (guesses[e]) {
+                if(guesses[e][f]>=1){
+                    guesses[e][f]='x'
+                } else {
+                    guesses[e][f]=1
+                }
+
             } else {
-                guesses[key]=1
+                //print("guesses[e] was false")
+                guesses[e]=[]
+                guesses[e][f]=1
             }
         })
     })
@@ -42,11 +53,17 @@ partOne = () => {
             recordSuggestions(start,size,rowID)
         })
         let sum = 0
-        Object.values(guesses).forEach(e=>{
-            if (e>=2){
-                sum++
-            }
+        //print(guesses)
+        fs.writeFileSync("file.json",JSON.stringify(guesses),null,4)
+        //print(guesses)
+        Object.keys(guesses).forEach(key=>{
+            guesses[key].forEach(number=>{
+                if(number==='x') sum++
+            })
         })
+        //print(guesses)
+
+
         print(sum)
     })
 }
