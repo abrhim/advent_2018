@@ -48,8 +48,8 @@ partOne = () =>{
 }
 
 compareLineToLine = (line1,line2) => {
-    line1 = line1.split("")
-    line2 = line2.split("")
+    //line1 = line1.split("")
+    //line2 = line2.split("")
     let count=0
     let daChar=''
 
@@ -77,16 +77,6 @@ partTwo = () => {
             }
         }
     })
-
-    //open file
-    //for each line
-    //  each line is compared against it
-    //  go thru every other line comparing char by char. if a char is different, increment diff counter. 
-    //  if diff counter is 2, break and go to the next line. If diff counter is not --> report the two lines. 
-    
-
 }
-
-
 
 partTwo()
